@@ -14,21 +14,38 @@ monthlyPrincipalInterest,
 monthlyPropertyTaxes,
 monthlyHomeInsurance,
 monthlyHoa,
-labels = ["Principal & Interest","Property Tax","Home Insurance"], backgroundColor = ["rgba(255,159,64,1)","rgba(255,159,64,1)","rgba(255,159,64,1)"];
+labels = ["Principal & Interest","Property Tax","Home Insurance","HOA"], 
+backgroundColor = [
+"rgba(255,99,132,1)",
+"rgba(54,162,235,1)",
+"rgba(255,206,86,1)",
+"rgba(75,192,192,1)",
+"rgba(153,102,255,1)",
+"rgba(255,159,64,1)",
+];
+borderColor = [
+"rgba(255,99,132,1)",
+"rgba(54,162,235,1)",
+"rgba(255,206,86,1)",
+"rgba(75,192,192,1)",
+"rgba(153,102,255,1)",
+"rgba(255,159,64,1)",
+];
 
 function getNumber(str) {
     return Number(str.replace(/[^0-9\.-]+/g, ""));
 }
 
-const ctx = document.getElementById('myChart');
-
-new Chart(ctx, {
-  type: 'bar',
+let ctx = document.getElementById('myChart').getContext('2d');
+let myChart = new Chart(ctx, {
+  type: 'doughnut',
   data: {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    labels: labels,
     datasets: [{
-      label: '# of Votes',
+      label: "# of votes",
       data: [12, 19, 3, 5, 2, 3],
+      backgroundColor: backgroundColor,
+      borderColor: borderColor,
       borderWidth: 1
     }]
   },
