@@ -1,3 +1,4 @@
+// delcare state of the form
 let state = {
     price: getNumber(document.querySelectorAll('[name="price"]')[0].value),
     loan_years: document.querySelectorAll('[name="loan_years"]')[0].value,
@@ -8,6 +9,7 @@ let state = {
     hoa: document.querySelectorAll('[name="hoa"]')[0].value,
 }
 
+// declare variables
 let totalLoan,
 totalMonths,
 monthlyPrincipalInterest,
@@ -32,10 +34,12 @@ borderColor = [
 "rgba(255,159,64,1)",
 ];
 
+// removes characters and returns only numbers
 function getNumber(str) {
     return Number(str.replace(/[^0-9\.-]+/g, ""));
 }
 
+// initialize chartJS instance
 let ctx = document.getElementById('myChart').getContext('2d');
 let myChart = new Chart(ctx, {
   type: 'doughnut',
@@ -43,7 +47,12 @@ let myChart = new Chart(ctx, {
     labels: labels,
     datasets: [{
       label: "# of votes",
-      data: [12, 19, 3, 5, 2, 3],
+      data: [
+        monthlyPrincipalInterest,
+        monthlyPropertyTaxes,
+        monthlyHomeInsurance,
+        monthlyHoa,
+      ],
       backgroundColor: backgroundColor,
       borderColor: borderColor,
       borderWidth: 1
@@ -57,5 +66,28 @@ let myChart = new Chart(ctx, {
     }
   }
 });
+myChart.options.animation = false;
+
+// add event listener to inputs
+
+let i;
+let inputText = document.getElementsByClassName("form-group__textInput");
+
+for(i = 0; i < inputText.length; i++)
+{
+  inputTexts[i].addEventListener('input', updateInputsState());
+}
+
+function updateInputsState(event){
+  let name = event.target.name;
+  let value = event.target.value;
+  if (name == 'price'){
+    value == getNumber(value);
+  }
+  state = {
+    ...state,
+    [name]: value
+  }
+}
 
 console.log(state);
