@@ -69,13 +69,17 @@ let myChart = new Chart(ctx, {
 myChart.options.animation = false;
 
 // add event listener to inputs
-
 let i;
-let inputText = document.getElementsByClassName("form-group__textInput");
-
-for(i = 0; i < inputText.length; i++)
+let inputTexts = document.getElementsByClassName("form-group__textInput");
+for(i = 0; i < inputTexts.length; i++)
 {
-  inputTexts[i].addEventListener('input', updateInputsState());
+  inputTexts[i].addEventListener('input', updateInputsState);
+}
+
+let inputSlides = document.getElementsByClassName("form-group__range-slide");
+for(i = 0; i < inputSlides.length; i++)
+{
+  inputSlides[i].addEventListener('input', updateInputsState);
 }
 
 function updateInputsState(event){
@@ -84,10 +88,19 @@ function updateInputsState(event){
   if (name == 'price'){
     value == getNumber(value);
   }
+  if (event.target.type == 'range'){
+    let total = (document.getElementsByClassName(`total__${name}`))[0].innerHTML = `${value}`
+  }
   state = {
     ...state,
     [name]: value
   }
+  console.log(state);
 }
 
-console.log(state);
+document.getElementsByTagName('form')[0].addEventListener('submit' , (event) => {
+  event.preventDefault();
+  document.getElementsByClassName('mg-page__right')[0].classList.add('mg-page__right--animate');
+});
+
+console.log(inputTexts);
